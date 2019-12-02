@@ -26,19 +26,21 @@ public class JedidiahPrall_CalvinNguyen_06 {
 	private static int length = 100;                               // Length of array
 	private static int array[];                                    // Integer array for unsorted numbers
 	private static int[] sortedArray ;                             // array for sorted numbers
+	private static int[] quickSortArray;
 	private static PrintWriter output;                             // Output
 
 	public static void main(String[] args) throws IOException {
 
 		INPUT_FILE = "Project_06_Input.txt";
 		OUTPUT_FILE1 = "Project_06_Output1.txt";
+		
 
 		processInput();
 
 		shellSort(sortedArray);
 
-		quickSort(sortedArray);
-
+		quickSort(quickSortArray);
+		
 		generateReport();
 
 	}
@@ -67,16 +69,19 @@ public class JedidiahPrall_CalvinNguyen_06 {
 		
 		array = new int[length];
 		sortedArray = new int[length];
+		quickSortArray = new int[length];
 
 		while (fileReader.hasNextInt()) {
 			array[lineNum] = fileReader.nextInt();
 			sortedArray[lineNum] = array[lineNum];
+			quickSortArray[lineNum] = array[lineNum];
+			
 			lineNum++;
 		} // End of while loop
 		
 		System.out.println("Original Array:");
 		for (int i = 0; i < length; i++)
-			System.out.print(array[i] + " ");
+			System.out.print(array[i] + ",");
 
 		fileReader.close();
 		System.out.println("");
@@ -88,7 +93,7 @@ public class JedidiahPrall_CalvinNguyen_06 {
 
 	/**
 	 * shellSort with organize the random numbers by comparing elements that are at a certain distance apart 
-	 * and reducing the gap vaule until gap size is 1.
+	 * and reducing the gap value until gap size is 1.
 	 * @param Array integer array that holds all of the random numbers to be sorted.
 	 */
 
@@ -121,19 +126,18 @@ public class JedidiahPrall_CalvinNguyen_06 {
 
 	/**
 	 * quickSort with organize the random numbers by finding a pivot point and comparing left and right side 
-	 * integers to the piviot.
+	 * integers to the pivot.
 	 * @param Array integer array that holds all of the random numbers to be sorted.
 	 */
-	private static void quickSort(int[] sortedArray) {
-		if (sortedArray == null || sortedArray.length == 0) {
+	private static void quickSort(int[] quickSortArray) {
+		if (quickSortArray == null || quickSortArray.length == 0) {
 			return;
-		} // End of if statement
-		
-		sortedArray = sortedArray;
-		length = sortedArray.length;
-		sort(0, sortedArray.length - 1);
+		}
+		array = quickSortArray;
+		length = quickSortArray.length;
+		sort(0, quickSortArray.length - 1);
 
-	} // End of quicksort method
+	} // End of quickSort method
 
 /************************************************************************************************************/
 	// Start of sort method
@@ -147,14 +151,14 @@ public class JedidiahPrall_CalvinNguyen_06 {
 	private static void sort(int lowIndex, int highIndex) {
 		int low = lowIndex;
 		int high = highIndex;
-		int pivot = array[low + (high - low) / 2];
+		int pivot = quickSortArray[low + (high - low) / 2];
 
 		while (low <= high) {
-			while (array[low] < pivot) {
+			while (quickSortArray[low] < pivot) {
 				low++;
 			} // End of While Loop
 			
-			while (array[high] > pivot) {
+			while (quickSortArray[high] > pivot) {
 				high--;
 			} // End of while Loop
 			
@@ -166,9 +170,9 @@ public class JedidiahPrall_CalvinNguyen_06 {
 			
 		} // End of While Loop
 		
-		if (low < high)
+		if (lowIndex < high)
 			sort(lowIndex, high);
-		if (low < high) {
+		if (low < highIndex) {
 			sort(low, highIndex);
 		} // End of if statement
 
@@ -184,9 +188,9 @@ public class JedidiahPrall_CalvinNguyen_06 {
 	 */
 
 	private static void swap(int lowIndex, int highIndex) {
-		int temp = array[lowIndex];
-		array[lowIndex] = array[highIndex];
-		array[highIndex] = temp;
+		int temp = quickSortArray[lowIndex];
+		quickSortArray[lowIndex] = quickSortArray[highIndex];
+		quickSortArray[highIndex] = temp;
 	} // End of swap method
 
 /************************************************************************************************************/
@@ -221,12 +225,12 @@ public class JedidiahPrall_CalvinNguyen_06 {
 			output = new PrintWriter(creation2);
 
 			output.println("Quick Sort array: ");
-			for (int j = 0; j < sortedArray.length; j++) {
+			for (int j = 0; j < quickSortArray.length; j++) {
 				if (j % 10 == 0 && j > 0) {
 					output.println();
 				} // End of if statement
 				
-				output.print(sortedArray[j] + " ");
+				output.print(quickSortArray[j] + " ");
 			} // End of for loop
 			
 			output.close();
